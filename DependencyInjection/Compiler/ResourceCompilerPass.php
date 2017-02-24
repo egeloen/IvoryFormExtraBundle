@@ -28,7 +28,7 @@ class ResourceCompilerPass implements CompilerPassInterface
             $container->setParameter(
                 $parameter,
                 array_merge(
-                    array('IvoryFormExtraBundle:Form'),
+                    ['IvoryFormExtraBundle:Form'],
                     $container->getParameter($parameter)
                 )
             );
@@ -38,10 +38,10 @@ class ResourceCompilerPass implements CompilerPassInterface
             $container->setParameter(
                 $parameter,
                 array_merge(
-                    array(
+                    [
                         'IvoryFormExtraBundle:Form:javascript.html.twig',
                         'IvoryFormExtraBundle:Form:stylesheet.html.twig',
-                    ),
+                    ],
                     $container->getParameter($parameter)
                 )
             );

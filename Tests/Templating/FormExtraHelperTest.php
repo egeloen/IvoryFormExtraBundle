@@ -14,6 +14,7 @@ namespace Ivory\FormExtraBundle\Tests\Templating;
 use Ivory\FormExtraBundle\Templating\FormExtraHelper;
 use Ivory\FormExtraBundle\Tests\AbstractTestCase;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Templating\TemplatingRendererEngine;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormRenderer;
@@ -47,14 +48,14 @@ class FormExtraHelperTest extends AbstractTestCase
      */
     protected function setUp()
     {
-        $this->phpEngine = new PhpEngine(new TemplateNameParser(), new FilesystemLoader(array(
+        $this->phpEngine = new PhpEngine(new TemplateNameParser(), new FilesystemLoader([
             __DIR__.'/../../Resources/views/Form/%name%',
             __DIR__.'/../Fixtures/views/Templating/%name%',
-        )));
+        ]));
 
         $this->formFactory = Forms::createFormFactory();
-        $this->formRenderer = new FormRenderer(new TemplatingRendererEngine($this->phpEngine, array('')));
-        $this->phpEngine->addHelpers(array('ivory_form_extra' => new FormExtraHelper($this->formRenderer)));
+        $this->formRenderer = new FormRenderer(new TemplatingRendererEngine($this->phpEngine, ['']));
+        $this->phpEngine->addHelpers(['ivory_form_extra' => new FormExtraHelper($this->formRenderer)]);
     }
 
     public function testDefaultJavascriptFragment()
@@ -65,7 +66,7 @@ class FormExtraHelperTest extends AbstractTestCase
             ->getForm()
             ->createView();
 
-        $this->assertEmpty($this->normalize($this->phpEngine->render('javascript.html.php', array('form' => $form))));
+        $this->assertEmpty($this->normalize($this->phpEngine->render('javascript.html.php', ['form' => $form])));
     }
 
     public function testCustomJavascriptFragment()
@@ -83,7 +84,7 @@ class FormExtraHelperTest extends AbstractTestCase
 
         $this->assertSame(
             $expected,
-            $this->normalize($this->phpEngine->render('javascript.html.php', array('form' => $form)))
+            $this->normalize($this->phpEngine->render('javascript.html.php', ['form' => $form]))
         );
     }
 
@@ -102,7 +103,7 @@ class FormExtraHelperTest extends AbstractTestCase
 
         $this->assertSame(
             $expected,
-            $this->normalize($this->phpEngine->render('javascript.html.php', array('form' => $form)))
+            $this->normalize($this->phpEngine->render('javascript.html.php', ['form' => $form]))
         );
     }
 
@@ -114,7 +115,7 @@ class FormExtraHelperTest extends AbstractTestCase
             ->getForm()
             ->createView();
 
-        $this->assertEmpty($this->normalize($this->phpEngine->render('stylesheet.html.php', array('form' => $form))));
+        $this->assertEmpty($this->normalize($this->phpEngine->render('stylesheet.html.php', ['form' => $form])));
     }
 
     public function testCustomStylesheetFragment()
@@ -132,7 +133,7 @@ class FormExtraHelperTest extends AbstractTestCase
 
         $this->assertSame(
             $expected,
-            $this->normalize($this->phpEngine->render('stylesheet.html.php', array('form' => $form)))
+            $this->normalize($this->phpEngine->render('stylesheet.html.php', ['form' => $form]))
         );
     }
 
@@ -151,7 +152,7 @@ class FormExtraHelperTest extends AbstractTestCase
 
         $this->assertSame(
             $expected,
-            $this->normalize($this->phpEngine->render('stylesheet.html.php', array('form' => $form)))
+            $this->normalize($this->phpEngine->render('stylesheet.html.php', ['form' => $form]))
         );
     }
 
@@ -162,7 +163,7 @@ class FormExtraHelperTest extends AbstractTestCase
      */
     private function getFormType($type)
     {
-        return method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+        return method_exists(AbstractType::class, 'getBlockPrefix')
             ? 'Symfony\Component\Form\Extension\Core\Type\\'.ucfirst($type).'Type'
             : $type;
     }

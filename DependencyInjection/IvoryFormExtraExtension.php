@@ -28,7 +28,7 @@ class IvoryFormExtraExtension extends Extension
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
-        foreach (array('templating', 'twig') as $service) {
+        foreach (['templating', 'twig'] as $service) {
             $loader->load($service.'.xml');
         }
     }

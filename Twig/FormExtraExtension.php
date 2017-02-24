@@ -11,6 +11,8 @@
 
 namespace Ivory\FormExtraBundle\Twig;
 
+use Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
@@ -21,15 +23,15 @@ class FormExtraExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        $options = array(
-            'node_class' => 'Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode',
-            'is_safe'    => array('html'),
-        );
+        $options = [
+            'node_class' => SearchAndRenderBlockNode::class,
+            'is_safe'    => ['html'],
+        ];
 
-        return array(
+        return [
             new \Twig_SimpleFunction('form_javascript', null, $options),
             new \Twig_SimpleFunction('form_stylesheet', null, $options),
-        );
+        ];
     }
 
     /**

@@ -39,27 +39,27 @@ class ResourceCompilerPassTest extends AbstractTestCase
         $containerBuilder
             ->expects($this->exactly(2))
             ->method('hasParameter')
-            ->will($this->returnValueMap(array(
-                array('templating.helper.form.resources', false),
-                array($parameter = 'twig.form.resources', true),
-            )));
+            ->will($this->returnValueMap([
+                ['templating.helper.form.resources', false],
+                [$parameter = 'twig.form.resources', true],
+            ]));
 
         $containerBuilder
             ->expects($this->once())
             ->method('getParameter')
             ->with($this->identicalTo($parameter))
-            ->will($this->returnValue(array($template = 'layout.html.twig')));
+            ->will($this->returnValue([$template = 'layout.html.twig']));
 
         $containerBuilder
             ->expects($this->once())
             ->method('setParameter')
             ->with(
                 $this->identicalTo($parameter),
-                $this->identicalTo(array(
+                $this->identicalTo([
                     'IvoryFormExtraBundle:Form:javascript.html.twig',
                     'IvoryFormExtraBundle:Form:stylesheet.html.twig',
                     $template,
-                ))
+                ])
             );
 
         $this->compilerPass->process($containerBuilder);
@@ -71,23 +71,23 @@ class ResourceCompilerPassTest extends AbstractTestCase
         $containerBuilder
             ->expects($this->exactly(2))
             ->method('hasParameter')
-            ->will($this->returnValueMap(array(
-                array($parameter = 'templating.helper.form.resources', true),
-                array('twig.form.resources', false),
-            )));
+            ->will($this->returnValueMap([
+                [$parameter = 'templating.helper.form.resources', true],
+                ['twig.form.resources', false],
+            ]));
 
         $containerBuilder
             ->expects($this->once())
             ->method('getParameter')
             ->with($this->identicalTo($parameter))
-            ->will($this->returnValue(array($template = 'layout.html.php')));
+            ->will($this->returnValue([$template = 'layout.html.php']));
 
         $containerBuilder
             ->expects($this->once())
             ->method('setParameter')
             ->with(
                 $this->identicalTo($parameter),
-                $this->identicalTo(array('IvoryFormExtraBundle:Form', $template))
+                $this->identicalTo(['IvoryFormExtraBundle:Form', $template])
             );
 
         $this->compilerPass->process($containerBuilder);
@@ -98,9 +98,9 @@ class ResourceCompilerPassTest extends AbstractTestCase
      */
     private function createContainerBuilderMock()
     {
-        return $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
+        return $this->getMockBuilder(ContainerBuilder::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('hasParameter', 'getParameter', 'setParameter'))
+            ->setMethods(['hasParameter', 'getParameter', 'setParameter'])
             ->getMock();
     }
 }

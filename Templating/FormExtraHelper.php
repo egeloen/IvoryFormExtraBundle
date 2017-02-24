@@ -39,7 +39,7 @@ class FormExtraHelper extends Helper
      *
      * @return string
      */
-    public function javascript(FormView $view, array $variables = array())
+    public function javascript(FormView $view, array $variables = [])
     {
         return $this->renderer->searchAndRenderBlock($view, 'javascript', $variables);
     }
@@ -50,7 +50,7 @@ class FormExtraHelper extends Helper
      *
      * @return string
      */
-    public function stylesheet(FormView $view, array $variables = array())
+    public function stylesheet(FormView $view, array $variables = [])
     {
         return $this->renderer->searchAndRenderBlock($view, 'stylesheet', $variables);
     }

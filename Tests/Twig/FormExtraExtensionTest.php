@@ -16,6 +16,7 @@ use Ivory\FormExtraBundle\Twig\FormExtraExtension;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Forms;
 
@@ -44,20 +45,20 @@ class FormExtraExtensionTest extends AbstractTestCase
      */
     protected function setUp()
     {
-        $this->twig = new \Twig_Environment(new \Twig_Loader_Filesystem(array(
+        $this->twig = new \Twig_Environment(new \Twig_Loader_Filesystem([
             __DIR__.'/../../Resources/views/Form',
             __DIR__.'/../Fixtures/views/Twig',
-        )));
+        ]));
 
         $this->formFactory = Forms::createFormFactory();
         $this->formRenderer = new TwigRenderer(new TwigRendererEngine(
-            array('javascript.html.twig', 'stylesheet.html.twig'),
+            ['javascript.html.twig', 'stylesheet.html.twig'],
             $this->twig
         ));
 
         $this->twig->addExtension(new FormExtraExtension());
 
-        if (!method_exists('Symfony\Bridge\Twig\Extension\FormExtension', '__get')) {
+        if (!method_exists(FormExtension::class, '__get')) {
             $this->twig->addExtension(new FormExtension($this->formRenderer));
         } else {
             $this->twig->addExtension(new FormExtension());
@@ -83,7 +84,7 @@ class FormExtraExtensionTest extends AbstractTestCase
 
         $template = $this->twig->createTemplate('{{ form_javascript(form) }}');
 
-        $this->assertEmpty($template->render(array('form' => $form)));
+        $this->assertEmpty($template->render(['form' => $form]));
     }
 
     public function testCustomJavascriptFragment()
@@ -101,7 +102,7 @@ class FormExtraExtensionTest extends AbstractTestCase
         $expected = '<script type="text/javascript">text-javascript</script>';
         $expected .= '<script type="text/javascript">submit-javascript</script>';
 
-        $this->assertSame($expected, $template->render(array('form' => $form)));
+        $this->assertSame($expected, $template->render(['form' => $form]));
     }
 
     public function testInheritanceJavascriptFragment()
@@ -119,7 +120,7 @@ class FormExtraExtensionTest extends AbstractTestCase
         $expected = '<script type="text/javascript">text-javascript</script>';
         $expected .= '<script type="text/javascript">button-javascript</script>';
 
-        $this->assertSame($expected, $template->render(array('form' => $form)));
+        $this->assertSame($expected, $template->render(['form' => $form]));
     }
 
     public function testDefaultStylesheetFragment()
@@ -132,7 +133,7 @@ class FormExtraExtensionTest extends AbstractTestCase
 
         $template = $this->twig->createTemplate('{{ form_stylesheet(form) }}');
 
-        $this->assertEmpty($template->render(array('form' => $form)));
+        $this->assertEmpty($template->render(['form' => $form]));
     }
 
     public function testCustomStylesheetFragment()
@@ -150,7 +151,7 @@ class FormExtraExtensionTest extends AbstractTestCase
         $expected = '<style type="text/css">text-stylesheet</style>';
         $expected .= '<style type="text/css">submit-stylesheet</style>';
 
-        $this->assertSame($expected, $template->render(array('form' => $form)));
+        $this->assertSame($expected, $template->render(['form' => $form]));
     }
 
     public function testInheritanceStylesheetFragment()
@@ -168,7 +169,7 @@ class FormExtraExtensionTest extends AbstractTestCase
         $expected = '<style type="text/css">text-stylesheet</style>';
         $expected .= '<style type="text/css">button-stylesheet</style>';
 
-        $this->assertSame($expected, $template->render(array('form' => $form)));
+        $this->assertSame($expected, $template->render(['form' => $form]));
     }
 
     /**
@@ -178,7 +179,7 @@ class FormExtraExtensionTest extends AbstractTestCase
      */
     private function getFormType($type)
     {
-        return method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+        return method_exists(AbstractType::class, 'getBlockPrefix')
             ? 'Symfony\Component\Form\Extension\Core\Type\\'.ucfirst($type).'Type'
             : $type;
     }

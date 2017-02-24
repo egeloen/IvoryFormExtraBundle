@@ -11,6 +11,8 @@
 
 namespace Ivory\FormExtraBundle\Tests;
 
+use Ivory\FormExtraBundle\DependencyInjection\Compiler\ResourceCompilerPass;
+use Ivory\FormExtraBundle\DependencyInjection\Compiler\TemplatingCompilerPass;
 use Ivory\FormExtraBundle\IvoryFormExtraBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -43,13 +45,13 @@ class IvoryFormExtraBundleTest extends AbstractTestCase
         $containerBuilder
             ->expects($this->at(0))
             ->method('addCompilerPass')
-            ->with($this->isInstanceOf('Ivory\FormExtraBundle\DependencyInjection\Compiler\ResourceCompilerPass'))
+            ->with($this->isInstanceOf(ResourceCompilerPass::class))
             ->will($this->returnSelf());
 
         $containerBuilder
             ->expects($this->at(1))
             ->method('addCompilerPass')
-            ->with($this->isInstanceOf('Ivory\FormExtraBundle\DependencyInjection\Compiler\TemplatingCompilerPass'))
+            ->with($this->isInstanceOf(TemplatingCompilerPass::class))
             ->will($this->returnSelf());
 
         $this->bundle->build($containerBuilder);
@@ -60,9 +62,9 @@ class IvoryFormExtraBundleTest extends AbstractTestCase
      */
     private function createContainerBuilderMock()
     {
-        return $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
+        return $this->getMockBuilder(ContainerBuilder::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('addCompilerPass'))
+            ->setMethods(['addCompilerPass'])
             ->getMock();
     }
 }

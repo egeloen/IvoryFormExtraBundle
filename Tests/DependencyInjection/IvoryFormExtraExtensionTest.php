@@ -12,7 +12,9 @@
 namespace Ivory\FormExtraBundle\Tests\DependencyInjection;
 
 use Ivory\FormExtraBundle\DependencyInjection\IvoryFormExtraExtension;
+use Ivory\FormExtraBundle\Templating\FormExtraHelper;
 use Ivory\FormExtraBundle\Tests\AbstractTestCase;
+use Ivory\FormExtraBundle\Twig\FormExtraExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Form\FormRendererInterface;
 
@@ -36,7 +38,7 @@ class IvoryFormExtraExtensionTest extends AbstractTestCase
      */
     protected function setUp()
     {
-        $this->formRendererMock = $this->createMock('Symfony\Component\Form\FormRendererInterface');
+        $this->formRendererMock = $this->createMock(FormRendererInterface::class);
 
         $this->container = new ContainerBuilder();
         $this->container->set('templating.form.renderer', $this->formRendererMock);
@@ -54,11 +56,11 @@ class IvoryFormExtraExtensionTest extends AbstractTestCase
         $this->assertTrue($this->container->getDefinition($helper)->hasTag($tag = 'templating.helper'));
 
         $this->assertSame(
-            array(array('alias' => 'ivory_form_extra')),
+            [['alias' => 'ivory_form_extra']],
             $this->container->getDefinition($helper)->getTag($tag)
         );
 
-        $this->assertInstanceOf('Ivory\FormExtraBundle\Templating\FormExtraHelper', $this->container->get($helper));
+        $this->assertInstanceOf(FormExtraHelper::class, $this->container->get($helper));
     }
 
     public function testTwigExtension()
@@ -67,6 +69,6 @@ class IvoryFormExtraExtensionTest extends AbstractTestCase
 
         $this->assertTrue($this->container->hasDefinition($helper = 'ivory_form_extra.twig.extension'));
         $this->assertTrue($this->container->getDefinition($helper)->hasTag($tag = 'twig.extension'));
-        $this->assertInstanceOf('Ivory\FormExtraBundle\Twig\FormExtraExtension', $this->container->get($helper));
+        $this->assertInstanceOf(FormExtraExtension::class, $this->container->get($helper));
     }
 }
