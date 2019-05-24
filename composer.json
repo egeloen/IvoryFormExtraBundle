@@ -11,17 +11,17 @@
         }
     ],
     "require": {
-        "php": "^5.6|^7.0",
-        "symfony/form": "^2.7|^3.0|^4.0",
-        "symfony/framework-bundle": "^2.7|^3.0|^4.0"
+        "php": "^7.0",
+        "symfony/form": "^3.2|^4.0",
+        "symfony/framework-bundle": "^3.2|^4.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.0",
         "phpunit/phpunit": "^5.0",
-        "symfony/phpunit-bridge": "^2.7|^3.0|^4.0",
-        "symfony/templating": "^2.7|^3.0|^4.0",
-        "symfony/twig-bridge": "^2.7|^3.0|^4.0",
-        "twig/twig": "^1.18|^2.0"
+        "symfony/phpunit-bridge": "^3.0|^4.0",
+        "symfony/templating": "^3.0|^4.0",
+        "symfony/twig-bridge": "^3.0|^4.0",
+        "twig/twig": "^2.0"
     },
     "suggest": {
         "symfony/twig-bridge": "Allows to use Twig templates"
