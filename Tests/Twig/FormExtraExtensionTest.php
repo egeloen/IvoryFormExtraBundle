@@ -45,7 +45,7 @@ class FormExtraExtensionTest extends AbstractTestCase
      */
     protected function setUp()
     {
-        $this->twig = new \Twig_Environment(new \Twig_Loader_Filesystem([
+        $this->twig = new \Twig_Environment(new \Twig\Loader\FilesystemLoader([
             __DIR__.'/../../Resources/views/Form',
             __DIR__.'/../Fixtures/views/Twig',
         ]));

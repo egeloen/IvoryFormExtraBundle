@@ -16,7 +16,7 @@ use Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class FormExtraExtension extends \Twig_Extension
+class FormExtraExtension extends \Twig\Extension\AbstractExtension
 {
     /**
      * {@inheritdoc}
