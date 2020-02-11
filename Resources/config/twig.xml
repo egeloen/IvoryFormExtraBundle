@@ -6,8 +6,8 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <services>
-        <service id="ivory_form_extra.twig.extension" class="Ivory\FormExtraBundle\Twig\FormExtraExtension">
-            <argument type="service" id="twig.form.renderer" />
+        <service id="ivory_form_extra.twig.extension" class="Ivory\FormExtraBundle\Twig\FormExtraExtension" public="true">
+            <argument>twig.form.renderer</argument>
             <tag name="twig.extension" />
         </service>
     </services>

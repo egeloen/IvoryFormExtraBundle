@@ -12,11 +12,13 @@
 namespace Ivory\FormExtraBundle\Twig;
 
 use Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class FormExtraExtension extends \Twig_Extension
+class FormExtraExtension extends AbstractExtension
 {
     /**
      * {@inheritdoc}
@@ -29,8 +31,8 @@ class FormExtraExtension extends \Twig_Extension
         ];
 
         return [
-            new \Twig_SimpleFunction('form_javascript', null, $options),
-            new \Twig_SimpleFunction('form_stylesheet', null, $options),
+            new TwigFunction('form_javascript', null, $options),
+            new TwigFunction('form_stylesheet', null, $options),
         ];
     }
 

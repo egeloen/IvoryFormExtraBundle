@@ -39,8 +39,8 @@ class ResourceCompilerPass implements CompilerPassInterface
                 $parameter,
                 array_merge(
                     [
-                        'IvoryFormExtraBundle:Form:javascript.html.twig',
-                        'IvoryFormExtraBundle:Form:stylesheet.html.twig',
+                        '@IvoryFormExtra/Form/javascript.html.twig',
+                        '@IvoryFormExtra/Form/stylesheet.html.twig',
                     ],
                     $container->getParameter($parameter)
                 )

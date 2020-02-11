@@ -56,8 +56,8 @@ class ResourceCompilerPassTest extends AbstractTestCase
             ->with(
                 $this->identicalTo($parameter),
                 $this->identicalTo([
-                    'IvoryFormExtraBundle:Form:javascript.html.twig',
-                    'IvoryFormExtraBundle:Form:stylesheet.html.twig',
+                    '@IvoryFormExtra/Form/javascript.html.twig',
+                    '@IvoryFormExtra/Form/stylesheet.html.twig',
                     $template,
                 ])
             );

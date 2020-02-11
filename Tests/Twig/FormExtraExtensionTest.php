@@ -18,6 +18,7 @@ use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\Form\Forms;
 
 /**
@@ -45,33 +46,35 @@ class FormExtraExtensionTest extends AbstractTestCase
      */
     protected function setUp()
     {
-        $this->twig = new \Twig_Environment(new \Twig_Loader_Filesystem([
+        $this->twig = new \Twig_Environment(new \Twig\Loader\FilesystemLoader([
             __DIR__.'/../../Resources/views/Form',
             __DIR__.'/../Fixtures/views/Twig',
         ]));
 
         $this->formFactory = Forms::createFormFactory();
-        $this->formRenderer = new TwigRenderer(new TwigRendererEngine(
+        $this->formRenderer = new FormRenderer(new TwigRendererEngine(
             ['javascript.html.twig', 'stylesheet.html.twig'],
             $this->twig
         ));
 
         $this->twig->addExtension(new FormExtraExtension());
 
-        if (!method_exists(FormExtension::class, '__get')) {
-            $this->twig->addExtension(new FormExtension($this->formRenderer));
-        } else {
+//        if (!method_exists(FormExtension::class, '__get')) {
+//
+////            $this->twig->addExtension(new FormExtension($this->formRenderer));
+//            $this->twig->addExtension(new FormExtension());
+//        } else {
             $this->twig->addExtension(new FormExtension());
 
-            $loader = $this->createMock('Twig_RuntimeLoaderInterface');
+            $loader = $this->createMock(\Twig\RuntimeLoader\RuntimeLoaderInterface::class );
             $loader
                 ->expects($this->once())
                 ->method('load')
-                ->with($this->identicalTo('Symfony\Bridge\Twig\Form\TwigRenderer'))
+                ->with($this->identicalTo('Symfony\Component\Form\FormRenderer'))
                 ->will($this->returnValue($this->formRenderer));
 
             $this->twig->addRuntimeLoader($loader);
-        }
+//        }
     }
 
     public function testDefaultJavascriptFragment()
